@@ -5,14 +5,13 @@ using Zenject;
 public class Zombie : MonoBehaviour
 {
     private Settings _settings;
-   
-
-    //public Vector3 Position;
+    private SignalBus _signal;
 
     [Inject]
-    public void Construct(Settings settings) 
+    public void Construct(Settings settings, SignalBus signal) 
     {
         _settings = settings;
+        _signal = signal;
     }
 
     [Serializable]
@@ -23,5 +22,14 @@ public class Zombie : MonoBehaviour
 
     public class Factory : PlaceholderFactory<Zombie> 
     {
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out Player player))
+        {
+            Destroy(player.gameObject);
+            _signal.Fire(new PlayerDiedSignal());
+        }
     }
 }

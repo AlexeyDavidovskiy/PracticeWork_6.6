@@ -20,3 +20,4 @@ MonoBehaviour:
     Speed: 3
   _gameInstallerSettings:
     ZombiePredab: {fileID: 7311610504397810507, guid: 1e426194de7b71542adf633f669d8add, type: 3}
+    BulletPrefab: {fileID: 2280414629095591398, guid: feb6431b16b6ea841a864485dcd1bd81, type: 3}

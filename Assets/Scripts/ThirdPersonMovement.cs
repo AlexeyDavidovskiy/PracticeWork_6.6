@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
 public class ThirdPersonMovement : MonoBehaviour
 {
     [SerializeField] private Transform cameraTransform;
@@ -32,13 +31,15 @@ public class ThirdPersonMovement : MonoBehaviour
 
         Vector3 moveDir = forward * input.y + right * input.x;
 
-        if (moveDir != Vector3.zero)
+        // Всегда поворачиваем в сторону, куда смотрит камера (по горизонтали)
+        Vector3 cameraForwardFlat = cameraTransform.forward;
+        cameraForwardFlat.y = 0f;
+        if (cameraForwardFlat != Vector3.zero)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(moveDir);
+            Quaternion targetRotation = Quaternion.LookRotation(cameraForwardFlat);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
         controller.Move(moveDir * moveSpeed * Time.deltaTime);
     }
 }
-
